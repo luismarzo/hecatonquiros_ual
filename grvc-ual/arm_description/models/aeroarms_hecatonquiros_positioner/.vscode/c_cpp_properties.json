@@ -1,0 +1,21 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/luis/ws_positioner/devel/include",
+        "/home/luis/catkin_ws/devel/include",
+        "/opt/ros/kinetic/include",
+        "/home/luis/ws_positioner/src/PositionerEndTool/grvc-utils/argument_parser/include",
+        "/home/luis/ws_positioner/src/PositionerEndTool/grvc-utils/gazebo_animator/include",
+        "/home/luis/ws_positioner/src/PositionerEndTool/grvc-utils/handy_tools/include",
+        "/home/luis/ws_positioner/src/PositionerEndTool/hecatonquiros/arm_controller/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}

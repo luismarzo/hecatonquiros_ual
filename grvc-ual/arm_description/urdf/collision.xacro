@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="aeroarms" xmlns:xacro="http://www.ros.org/wiki/xacro">
+   <!-- BASE -->
+
+
+   <!--///////////////////////////////////LEFT ARM//////////////////////////////////-->
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mass" value="0.5" /> <!-- arbitrary value for mass -->
+  <xacro:property name="width" value="0.1" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="height1" value="2" /> <!-- Link 1 -->
+  <xacro:property name="height2" value="1" /> <!-- Link 2 -->
+  <xacro:property name="height3" value="1" /> <!-- Link 3 -->
+  <xacro:property name="camera_link" value="0.05" /> <!-- Size of square 'camera' box -->
+  <xacro:property name="axel_offset" value="0.05" /> <!-- Space btw top of beam and the each joint -->
+
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/aeroarms</robotNamespace>
+    </plugin>
+  </gazebo>
+
+
+   <link name="base_link">
+      <visual>
+         <origin rpy="0 0 0" xyz="0 0 0" />
+      </visual>
+   </link>
+   <!-- Joint 0 -->
+
+
+    <link name="left/arm_0_bottom">
+<self_collide>1</self_collide>
+      <visual>
+         <geometry>
+         <box size="0.01 0.01 0.001"/>
+            <!--mesh filename="package://arm_description/meshes/new_meshes/arm_0_attachment.stl" /-->
+         </geometry>
+          <origin rpy="0 0 0" xyz="0 0 0" />
+      </visual>
+      <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+        <box size="0.01 0.01 0.001"/>
+      </geometry>
+      </collision>
+
+          <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="${mass}"/>
+      <inertia
+	  ixx="${mass / 12.0 * (width*width + height1*height1)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (height1*height1 + width*width)}" iyz="0.0"
+	  izz="${mass / 12.0 * (width*width + width*width)}"/>
+    </inertial>
+
+   </link>
+   <joint name="left/arm_0_bottom_joint" type="continuous">
+      <parent link="base_link" />
+      <child link="left/arm_0_bottom" />
+      <origin rpy="0 0 0" xyz="0 0.1 -0.15" />
+   </joint>
+
+
+
+   
+   <link name="left/arm_1">
+<self_collide>1</self_collide>
+      <visual>
+         <geometry>
+         <box size="0.01 0.01 0.3"/>
+            <!--mesh filename="package://arm_description/meshes/new_meshes/arm_1.stl"  /-->
+         </geometry>
+         <origin rpy="0 0 ${pi}" xyz="0 0 0" />
+      </visual>
+            <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+        <box size="0.01 0.01 0.3"/>
+      </geometry>
+      </collision>
+
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="${mass}"/>
+      <inertia
+	  ixx="${mass / 12.0 * (width*width + height1*height1)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (height1*height1 + width*width)}" iyz="0.0"
+	  izz="${mass / 12.0 * (width*width + width*width)}"/>
+    </inertial>
+
+   </link>
+   <joint name="left/arm_1_joint" type="continuous">
+      <parent link="left/arm_0_bottom" />
+      <child link="left/arm_1" />
+      <origin xyz="0 0 -0.06" rpy="0 ${3*pi/2} 0" />
+   </joint>
+
+
+ 
+  
+<!--RIGHT ARMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-->
+
+
+<link name="right/arm_0_bottom">
+<self_collide>1</self_collide>
+      <visual>
+         <geometry>
+         <box size="0.01 0.01 0.001"/>
+            <!--mesh filename="package://arm_description/meshes/new_meshes/arm_0_attachment.stl" /-->
+         </geometry>
+          <origin rpy="0 0 0" xyz="0 0 0" />
+      </visual>
+    <collision>
+    <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+        <box size="0.01 0.01 0.001"/>
+      </geometry>
+      </collision>
+
+          <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="${mass}"/>
+      <inertia
+	  ixx="${mass / 12.0 * (width*width + height1*height1)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (height1*height1 + width*width)}" iyz="0.0"
+	  izz="${mass / 12.0 * (width*width + width*width)}"/>
+    </inertial>
+
+   </link>
+   <joint name="right/arm_0_bottom_joint" type="continuous">
+      <parent link="base_link" />
+      <child link="right/arm_0_bottom" />
+      <origin rpy="0 0 0" xyz="0 -0.1 -0.15" />
+   </joint>
+
+
+
+   
+   <link name="right/arm_1">
+<self_collide>1</self_collide>
+      <visual>
+         <geometry>
+         <box size="0.01 0.01 0.3"/>
+            <!--mesh filename="package://arm_description/meshes/new_meshes/arm_1.stl"  /-->
+         </geometry>
+         <origin rpy="0 0 ${pi}" xyz="0 0 0" />
+      </visual>
+            <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+        <box size="0.01 0.01 0.3"/>
+      </geometry>
+      </collision>
+
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="${mass}"/>
+      <inertia
+	  ixx="${mass / 12.0 * (width*width + height1*height1)}" ixy="0.0" ixz="0.0"
+	  iyy="${mass / 12.0 * (height1*height1 + width*width)}" iyz="0.0"
+	  izz="${mass / 12.0 * (width*width + width*width)}"/>
+    </inertial>
+
+   </link>
+   <joint name="right/arm_1_joint" type="continuous">
+      <parent link="right/arm_0_bottom" />
+      <child link="right/arm_1" />
+      <origin xyz="0 0 -0.06" rpy="0 ${3*pi/2} 0" />
+   </joint>
+
+ 
+
+
+
+<transmission name="tran_left/arm_0_bottom_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left/arm_0_bottom_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_left/arm_0_bottom_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran_left/arm_1_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left/arm_1_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_left/arm_1_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+ 
+
+   
+<!--Right arm-->
+
+<transmission name="tran_right/arm_0_bottom_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right/arm_0_bottom_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right/arm_0_bottom_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran_right/arm_1_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right/arm_1_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right/arm_1_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+
+   
+
+
+
+
+</robot>
