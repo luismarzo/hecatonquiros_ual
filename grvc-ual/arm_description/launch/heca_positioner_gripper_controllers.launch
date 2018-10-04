@@ -17,13 +17,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             left/arm_0_bottom_joint_position_controller
             left/arm_1_joint_position_controller
             left/arm_2_microservo_joint_position_controller
-	    left/base_gripper_joint_position_controller
+	          left/base_gripper_joint_position_controller
             left/left_gripper_joint_position_controller
             left/right_gripper_joint_position_controller
             right/arm_0_bottom_joint_position_controller
             right/arm_1_joint_position_controller
             right/arm_2_microservo_joint_position_controller
-            "/>
+            right/Positioner_HAND_joint_position_controller
+            right/Positioner_1_joint_position_controller
+            right/Positioner_2_joint_position_controller
+            right/Positioner_BASE_joint_position_controller
+            right/Positioner_Fija_BASE_joint_position_controller
+            "/>   <!--las transmisiones estan comentadas en el urdf porque las articulaciones son libres-->
 
 
     <param name="robot_description"  command="$(find xacro)/xacro --inorder '$(find arm_description)/urdf/positioner_gripper.xacro'" />        

@@ -1380,7 +1380,60 @@
   </transmission>
 
    
+<!--transmission name="tran_right/Positioner_HAND_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right/Positioner_HAND_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right/Positioner_HAND_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission>
 
+<transmission name="tran_right/Positioner_1_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right/Positioner_1_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right/Positioner_1_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission>
+
+<transmission name="tran_right/Positioner_2_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right/Positioner_2_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right/Positioner_2_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission>
+
+<transmission name="tran_right/Positioner_BASE_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right/Positioner_BASE_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right/Positioner_BASE_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission-->
+
+<transmission name="tran_right/Positioner_Fija_BASE_joint">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right/Positioner_Fija_BASE_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_right/Positioner_Fija_BASE_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission>
 
 
 

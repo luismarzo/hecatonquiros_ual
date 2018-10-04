@@ -33,5 +33,58 @@
     <include>
       <uri>model://ground_plane</uri>
     </include>
+
+
+    <model name="cilinder">
+      <link name="link">
+        <pose>1 1 0.7 0 1.57 0</pose>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>.07</radius>
+              <length>2</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>.07</radius>
+              <length>2</length>
+            </cylinder>
+          </geometry>
+        </visual>
+      </link>
+<static> true </static>
+      </model>
+
+
+
+        <model name="box">
+      <pose>0 2 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 0.5 1</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+      </model>
+
+
+
+
   </world>
+
+
 </sdf>
