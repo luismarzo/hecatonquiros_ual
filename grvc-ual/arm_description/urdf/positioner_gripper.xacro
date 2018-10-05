@@ -1380,7 +1380,7 @@
   </transmission>
 
    
-<!--transmission name="tran_right/Positioner_HAND_joint">
+<transmission name="tran_right/Positioner_HAND_joint">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="right/Positioner_HAND_joint">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
@@ -1422,7 +1422,7 @@
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-</transmission-->
+</transmission>
 
 <transmission name="tran_right/Positioner_Fija_BASE_joint">
     <type>transmission_interface/SimpleTransmission</type>

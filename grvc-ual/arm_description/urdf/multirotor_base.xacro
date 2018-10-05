@@ -58,18 +58,18 @@
       </collision>
     </link>
 
-<link name="base_link_inertia_collision_one">
+<!--link name="base_link_inertia_collision_one">
       <inertial>
-        <mass value="0.01" />  <!-- [kg] QUE HACEMOS AHORA CON LAS MASAS?????????????????????-->
+        <mass value="0.01" />  
         <origin xyz="0 0 0" />
         <xacro:insert_block name="inertia" />
       </inertial>
 
       <collision>
-        <origin xyz="0 0.4 -0.7" rpy="0 0 1.57" />   <!--izquierda-->
-	<!--origin xyz="0 0.2 -0.283" rpy="0 0 0" /-->
+        <origin xyz="0 0.4 -0.7" rpy="0 0 1.57" />   
+
         <geometry>
-	<!--box size="0.28 0.02 0.02" /-->
+
 	<box size="0.04 1.25 1" />	
         </geometry>
       </collision>
@@ -82,16 +82,16 @@
 
 <link name="base_link_inertia_collision_two">
       <inertial>
-        <mass value="0.01" />  <!-- [kg] QUE HACEMOS AHORA CON LAS MASAS?????????????????????-->
+        <mass value="0.01" />  
         <origin xyz="0 0 0" />
         <xacro:insert_block name="inertia" />
       </inertial>
 
       <collision>
-	<!--origin xyz="0 -0.2 -0.283" rpy="0 0 0" /-->
+	
         <origin xyz="0 -0.4 -0.7" rpy="0 0 1.57" />
         <geometry>
-	<!--box size="0.28 0.02 0.02" /-->
+	
 	<box size="0.04 1.25 1" />	
         </geometry>
       </collision>
@@ -100,7 +100,7 @@
       <origin xyz="0 0 0" rpy="0 0 0" />
       <parent link="base_link" />
       <child link="base_link_inertia_collision_two" />
-    </joint>
+    </joint-->
 
 <link name="base_link_inertia_collision_three">
       <inertial>

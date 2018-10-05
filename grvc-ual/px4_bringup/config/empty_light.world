@@ -2,6 +2,11 @@
 <sdf version="1.5">
   <world name="default">
     <!-- Reduced steps/sec -->
+        <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>0</shadows>
+    </scene>
     <physics type='ode'>
       <!-- Values shoud be step_size = 0.001*F and time_up= 1000/F-->
       <!-- 
@@ -17,11 +22,7 @@
               9   0.009        111
               10  0.01         100
       -->
-    <scene>
-      <ambient>0.4 0.4 0.4 1</ambient>
-      <background>0.7 0.7 0.7 1</background>
-      <shadows>0</shadows>
-    </scene>
+
       <max_step_size>0.002</max_step_size>
       <real_time_update_rate>500</real_time_update_rate>
     </physics>
@@ -37,12 +38,12 @@
 
     <model name="cilinder">
       <link name="link">
-        <pose>1 1 0.7 0 1.57 0</pose>
+        <pose>0 1.8 0.7 0 1.57 0</pose>
         <collision name="collision">
           <geometry>
             <cylinder>
               <radius>.07</radius>
-              <length>2</length>
+              <length>5</length>
             </cylinder>
           </geometry>
         </collision>
@@ -59,14 +60,13 @@
       </model>
 
 
-
         <model name="box">
-      <pose>0 2 0.5 0 0 0</pose>
+      <pose>0 -0.35 0.55 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.5 0.5 1</size>
+              <size>0.7 0.05 1</size>
             </box>
           </geometry>
         </collision>
@@ -74,14 +74,35 @@
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.5 0.5 1</size>
+              <size>0.7 0.05 1</size>
             </box>
           </geometry>
         </visual>
       </link>
+      <static> true </static>
       </model>
 
+        <model name="box_2">
+      <pose>0 0.35 0.55 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.7 0.05 1</size>
+            </box>
+          </geometry>
+        </collision>
 
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.7 0.05 1</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+      <static> true </static>
+      </model>
 
 
   </world>
