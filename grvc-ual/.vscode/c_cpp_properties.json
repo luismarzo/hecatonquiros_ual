@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/luis/ws_ual/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/luis/ws_ual/src/grvc-ual/heca_plugins/include",
+                "/home/luis/ws_ual/src/grvc-ual/uav_abstraction_layer/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

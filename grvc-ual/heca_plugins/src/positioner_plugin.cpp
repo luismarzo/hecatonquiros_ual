@@ -18,6 +18,8 @@
 #include <ros/ros.h>
 #include "heca_plugins/Set_position.h"
 #include "heca_plugins/Set_activation.h"
+#include <iostream>
+#include <iomanip>
 //#include <LinkConfig.hh>
 
 namespace gazebo
@@ -41,7 +43,7 @@ class positioner_plugin : public ModelPlugin
 		//   this->link_positioner->GetInertial()->SetMass(4); // Cambia la masa a 800000
 		//   this ->link_positioner ->UpdateMass();
 
-		archivo.open("Debugador_positioner.txt");
+		archivo.open("Debugador_positionernuevo.txt");
 		archivo << "\n"
 				<< this->model_uav->GetName()
 				<< "\t" << model->GetName()
@@ -49,8 +51,8 @@ class positioner_plugin : public ModelPlugin
 				<< "\t" << this->link_nombres[1]->GetName()
 				<< std::endl;
 
-		std::cout << " \ntimee \n"<< std::endl;
-
+		std::cout << " \nHOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA \n"<< std::endl;
+		
 		//Server
 		if (!ros::isInitialized())
 		{
@@ -73,16 +75,19 @@ class positioner_plugin : public ModelPlugin
 	void OnUpdate(const common::UpdateInfo &_info)
 	{
 		if (set_activation == 1)
-		{	
+		{
 			//mover el dron entero
 			//math::Pose staticPose(posx,posy,posz,roll,pitch,yaw);
 			//this->model_uav->SetWorldPose(staticPose);
 			//Setlinkstatic
 			math::Pose staticPose(static_position);
 			this->link_positioner->SetWorldPose(staticPose);
+			
 		}
-		else{
+		else
+		{
 			static_position = model_uav->GetLink("right/Positioner_Fija_BASE")->GetWorldPose();
+			
 		}
 	}
 

@@ -8,6 +8,9 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   gazebo_ros
   message_generation
+ # pcl
+ # pcl_ros
+
 )
 
 
@@ -17,6 +20,7 @@ add_service_files(
    AddTwoInts.srv
    Set_activation.srv
    Set_position.srv
+   Float32Param.srv
  )
 
 
@@ -60,4 +64,12 @@ target_link_libraries(positioner_plugin ${GAZEBO_LIBRARIES})
 add_executable(Set_activation_client src/Set_activation_client.cpp)
 target_link_libraries(Set_activation_client ${catkin_LIBRARIES})
 add_dependencies(Set_activation_client heca_plugin_gencpp)
+
+#add_executable(main src/pid/main.cpp)
+#target_link_libraries(main ${catkin_LIBRARIES})
+#add_dependencies(main heca_plugin_gencpp)
+
+#add_executable(receptor_PID src/pid/receptor_PID.cpp)
+#target_link_libraries(receptor_PID ${catkin_LIBRARIES})
+#add_dependencies(receptor_PID heca_plugin_gencpp)
 
