@@ -2,6 +2,7 @@
 #include "gazebo/gazebo.hh"
 #include "gazebo/physics/physics.hh"
 #include "gazebo/common/common.hh"
+#include "geometry_msgs/PoseStamped.h"
 #include "stdio.h"
 #include <fstream>
 
@@ -37,22 +38,21 @@ class positioner_plugin : public ModelPlugin
 		this->nombres = this->world->GetModels();
 		this->nombre_mundo = this->world->GetName();
 		static_position = model_uav->GetLink("right/Positioner_Fija_BASE")->GetWorldPose();
+		position_docker_begin = model_uav->GetLink("right/Positioner_HAND")->GetWorldPose();
 		//   this->jointR1_ = this->model->GetJoint("r1");
 		this->link_nombres = this->model_uav->GetLinks();
 		this->link_positioner = this->model_uav->GetLink("right/Positioner_Fija_BASE");
 		//   this->link_positioner->GetInertial()->SetMass(4); // Cambia la masa a 800000
 		//   this ->link_positioner ->UpdateMass();
 
-		archivo.open("Debugador_positionernuevo.txt");
-		archivo << "\n"
-				<< this->model_uav->GetName()
-				<< "\t" << model->GetName()
-				<< "\t" << this->number
-				<< "\t" << this->link_nombres[1]->GetName()
-				<< std::endl;
+		// archivo.open("Debugador_positionernuevo.txt");
+		// archivo << "\n"
+		// 		<< this->model_uav->GetName()
+		// 		<< "\t" << model->GetName()
+		// 		<< "\t" << this->number
+		// 		<< "\t" << this->link_nombres[1]->GetName()
+		// 		<< std::endl;
 
-		std::cout << " \nHOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA \n"<< std::endl;
-		
 		//Server
 		if (!ros::isInitialized())
 		{
@@ -66,14 +66,30 @@ class positioner_plugin : public ModelPlugin
 		service = n.advertiseService("Set_position", &positioner_plugin::Model_pose, this);
 		autoservice = n.advertiseService("Set_autoposition", &positioner_plugin::Model_autopose, this);
 		activationservice = n.advertiseService("Set_activation", &positioner_plugin::activation, this);
-		ROS_INFO("Ready.");
+		pub = n.advertise<geometry_msgs::PoseStamped>("/pipe_pose", 1000);
+		pipe_msg.pose.position.x = 0;
+		pipe_msg.pose.position.y = 0;
+		pipe_msg.pose.orientation.z = 0;
 
+		pub.publish(pipe_msg);
+
+		ros::spinOnce();
+		ROS_INFO("Ready.");
 		this->updateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&positioner_plugin::OnUpdate, this, _1));
 	}
 
   public:
 	void OnUpdate(const common::UpdateInfo &_info)
 	{
+
+		position_docker_begin = model_uav->GetLink("base_link")->GetWorldPose();
+		relative_position_docker = position_docker_begin - static_position;
+		pipe_msg.pose.position.x = relative_position_docker.pos.x;
+		pipe_msg.pose.position.y = relative_position_docker.pos.y;
+		pipe_msg.pose.orientation.z = relative_position_docker.rot.z;
+
+		pub.publish(pipe_msg);
+
 		if (set_activation == 1)
 		{
 			//mover el dron entero
@@ -82,12 +98,14 @@ class positioner_plugin : public ModelPlugin
 			//Setlinkstatic
 			math::Pose staticPose(static_position);
 			this->link_positioner->SetWorldPose(staticPose);
-			
 		}
 		else
 		{
 			static_position = model_uav->GetLink("right/Positioner_Fija_BASE")->GetWorldPose();
-			
+
+			//ros::Rate loop_rate(10);
+			//ros::spinOnce();
+			//loop_rate.sleep();
 		}
 	}
 
@@ -152,6 +170,7 @@ class positioner_plugin : public ModelPlugin
 	ros::ServiceServer service;
 	ros::ServiceServer autoservice;
 	ros::ServiceServer activationservice;
+	ros::Publisher pub;
 	long int posx = 0, posy = 0, posz = 0, roll = 0, pitch = 0, yaw = 0;
 	unsigned int number;
 	physics::Model_V nombres;
@@ -159,6 +178,9 @@ class positioner_plugin : public ModelPlugin
 	std::string nombre_mundo;
 	long int set_activation = 0;
 	math::Pose static_position;
+	math::Pose position_docker_begin;
+	math::Pose relative_position_docker;
+	geometry_msgs::PoseStamped pipe_msg;
 };
 
 // Register this plugin with the simulator

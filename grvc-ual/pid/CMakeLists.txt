@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
 			gazebo_ros
 			message_generation
 			ardrone_autonomy
+			uav_abstraction_layer
 )
 
 
@@ -51,7 +52,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 add_library(${PROJECT_NAME}
-src/PID.cpp src/main.cpp
+src/PID.cpp src/docker_pid.cpp
 )
 
 file(GLOB_RECURSE SRC_FILES "src/*.cpp" "include/*.h" "include/*.inl" )
@@ -62,3 +63,8 @@ add_executable(ual_pid src/ual_pid.cpp src/PID.cpp)
 target_link_libraries(ual_pid ${catkin_LIBRARIES})
 include_directories(PUBLIC ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(ual_pid pid_node_generate_messages_cpp)
+
+add_executable(docker_pid src/docker_pid.cpp src/PID.cpp)
+target_link_libraries(docker_pid ${catkin_LIBRARIES})
+include_directories(PUBLIC ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/include)
+add_dependencies(docker_pid pid_node_generate_messages_cpp)
