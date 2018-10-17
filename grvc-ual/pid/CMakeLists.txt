@@ -52,19 +52,24 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 add_library(${PROJECT_NAME}
-src/PID.cpp src/docker_pid.cpp
+src/PID.cpp src/docker_pid.cpp 
 )
 
 file(GLOB_RECURSE SRC_FILES "src/*.cpp" "include/*.h" "include/*.inl" )
 link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
-add_executable(ual_pid src/ual_pid.cpp src/PID.cpp)
-target_link_libraries(ual_pid ${catkin_LIBRARIES})
-include_directories(PUBLIC ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/include)
-add_dependencies(ual_pid pid_node_generate_messages_cpp)
+#add_executable(ual_pid src/ual_pid.cpp src/PID.cpp)
+#target_link_libraries(ual_pid ${catkin_LIBRARIES})
+#include_directories(PUBLIC ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/include)
+#add_dependencies(ual_pid pid_node_generate_messages_cpp)
 
 add_executable(docker_pid src/docker_pid.cpp src/PID.cpp)
 target_link_libraries(docker_pid ${catkin_LIBRARIES})
 include_directories(PUBLIC ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/include)
 add_dependencies(docker_pid pid_node_generate_messages_cpp)
+
+#add_executable(alex src/alex.cpp src/PID.cpp)
+#target_link_libraries(alex ${catkin_LIBRARIES})
+#include_directories(PUBLIC ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/include)
+#add_dependencies(alex pid_node_generate_messages_cpp)

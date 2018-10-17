@@ -39,6 +39,7 @@ class positioner_plugin : public ModelPlugin
 		this->nombre_mundo = this->world->GetName();
 		static_position = model_uav->GetLink("right/Positioner_Fija_BASE")->GetWorldPose();
 		position_docker_begin = model_uav->GetLink("right/Positioner_HAND")->GetWorldPose();
+		position_base_link = model_uav->GetLink("base_link")->GetWorldPose();
 		//   this->jointR1_ = this->model->GetJoint("r1");
 		this->link_nombres = this->model_uav->GetLinks();
 		this->link_positioner = this->model_uav->GetLink("right/Positioner_Fija_BASE");
@@ -67,9 +68,11 @@ class positioner_plugin : public ModelPlugin
 		autoservice = n.advertiseService("Set_autoposition", &positioner_plugin::Model_autopose, this);
 		activationservice = n.advertiseService("Set_activation", &positioner_plugin::activation, this);
 		pub = n.advertise<geometry_msgs::PoseStamped>("/pipe_pose", 1000);
+
+
 		pipe_msg.pose.position.x = 0;
 		pipe_msg.pose.position.y = 0;
-		pipe_msg.pose.orientation.z = 0;
+		pipe_msg.pose.position.z = 0;
 
 		pub.publish(pipe_msg);
 
@@ -82,13 +85,14 @@ class positioner_plugin : public ModelPlugin
 	void OnUpdate(const common::UpdateInfo &_info)
 	{
 
-		position_docker_begin = model_uav->GetLink("base_link")->GetWorldPose();
-		relative_position_docker = position_docker_begin - static_position;
-		pipe_msg.pose.position.x = relative_position_docker.pos.x;
-		pipe_msg.pose.position.y = relative_position_docker.pos.y;
-		pipe_msg.pose.orientation.z = relative_position_docker.rot.z;
+		position_docker_begin = model_uav->GetLink("right/Positioner_HAND")->GetWorldPose();
+		pipe_msg.pose.position.x = position_docker_begin.pos.x-static_position.pos.x;
+		pipe_msg.pose.position.y = position_docker_begin.pos.y-static_position.pos.y;
+		pipe_msg.pose.position.z = position_docker_begin.pos.z-static_position.pos.z;
 
 		pub.publish(pipe_msg);
+
+
 
 		if (set_activation == 1)
 		{
@@ -180,7 +184,9 @@ class positioner_plugin : public ModelPlugin
 	math::Pose static_position;
 	math::Pose position_docker_begin;
 	math::Pose relative_position_docker;
+	math::Pose position_base_link;
 	geometry_msgs::PoseStamped pipe_msg;
+
 };
 
 // Register this plugin with the simulator

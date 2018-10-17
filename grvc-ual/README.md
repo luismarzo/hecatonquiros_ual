@@ -1,20 +1,20 @@
 # grvc-ual MODIFICATION
 
-To use this modification, you just new to reference to arm_description pckage in the launchers. All the models are there, so il try not to touch robots_description package of this repo.
 
-Just change the name "robots_description" to "arm_description" in the following files:
+In order to use it:
 
+    Start  demo:
+        roslaunch uav_abstraction_layer test_server.launch
 
-[![Releases](https://img.shields.io/github/release/grvcTeam/grvc-ual.svg)](https://github.com/grvcTeam/grvc-ual/releases)
+    Take_off, Go_to_waypoint and call the PID:
+        rosrun pid docker_pid
 
+        (The entire length of the positioner is x: 0 y: 0 z: 0.4, so a good reference would be x: 0 y: 0 z: 0.3 for example) 
+        
+    Move the arms (for example arm_2):
+        rostopic pub -1 /aeroarms/right/arm_2_microservo_joint_position_controller/command std_msgs/Float64 "data: -0.8"
+       
+    Activate the docker plugin:
+        rosservice call /Set_activation "activation: 1"
 
-
-## Installation and use
-
-Download the latest stable version from [here](https://github.com/grvcTeam/grvc-ual/releases).
-
-You can find the instructions for installation and how to use the UAL in the [Wiki](https://github.com/grvcTeam/grvc-ual/wiki).
-
-## Dependencies
-
- * [PX4 Firmware](https://github.com/PX4/Firmware) at tag [v1.7.3](https://github.com/PX4/Firmware/tree/v1.7.3)
+    Now the positioner is entirely free, if you want to control one or more joints, go to arm_description/urdf/positioner_gripper.xacro. In the end, discoment the transmissions.

@@ -64,17 +64,17 @@ int main(int _argc, char **_argv)
 	ros::AsyncSpinner spinner(4);
 	spinner.start();
 
-	// PID px(1, 0.0, 0., -0.5, 0.5, -20, 20);
-	// PID py(1, 0.0, 0., -0.5, 0.5, -20, 20);
-	// PID pz(1, 0.0, 0., -0.5, 0.5, -20, 20);
+	PID px(1, 0.0, 0., -0.5, 0.5, -20, 20);
+	PID py(1, 0.0, 0., -0.5, 0.5, -20, 20);
+	PID pz(1, 0.0, 0., -0.5, 0.5, -20, 20);
 
-	// px.reference(3);
-	// py.reference(3);
-	// pz.reference(3);
+	px.reference(0);
+	py.reference(0);
+	pz.reference(3);
 
-	// px.enableRosInterface("/mav_controller/pid_x");
-	// py.enableRosInterface("/mav_controller/pid_y");
-	// pz.enableRosInterface("/mav_controller/pid_z");
+	px.enableRosInterface("/mav_controller/pid_x");
+	py.enableRosInterface("/mav_controller/pid_y");
+	pz.enableRosInterface("/mav_controller/pid_z");
 
 	bool pid = false;
 	double flight_level = 0;
