@@ -8,7 +8,8 @@ Start  demo:
 Take_off, Go_to_waypoint and call the PID:
     rosrun pid docker_pid
 
-    (The entire length of the positioner is x: 0 y: 0 z: 0.4, so a good reference would be x: 0 y: 0 z: 0.3 for example) 
+    (The entire length of the positioner is x: 0 y: 0 z: 0.4,
+    so a good reference would be x: 0 y: 0 z: 0.3 for example) 
     
 Move the arms (for example arm_2):
     rostopic pub -1 /aeroarms/right/arm_2_microservo_joint_position_controller/command std_msgs/Float64 "data: -0.8"
