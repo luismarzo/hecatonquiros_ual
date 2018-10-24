@@ -15,6 +15,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <arg name="mode" default="sitl"/>
     <arg name="pose_frame_id" default=""/><!-- To publish ual/pose in other frame than local, e.g. map -->
     <arg name="ual_server" default="on"/>
+    <arg name="robot_model" default="aeroarms_hecatonquiros_positioner_gripper"/>
+    <arg name="description_package" default="arm_description"/>
+    <arg name="world" default="empty_light_hecatonquiros"/>
 
     <!-- Load frame transforms for map and UAVs -->
     <rosparam file="$(find px4_bringup)/config/simulation_params.yaml" command="load" />
@@ -22,7 +25,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <group if="$(eval mode=='sitl')">
         <!-- Launch Gazebo simulation TODO: world location? -->
         <node pkg="px4_bringup" type="launch_gzworld.py" name="gazebo_world" output="screen"
-        args="-physics=ode -world=$(find px4_bringup)/config/empty_light.world"/>
+        args="-physics=ode -world=$(find px4_bringup)/config/$(arg world).world"/>
     </group>
 
     <!-- Launch robots. Argument mode can be:
@@ -36,6 +39,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <arg name="material" value="Orange"/>
         <arg name="mode" value="$(arg mode)"/>
         <arg name="ns_prefix" value="$(arg ns_prefix)"/>
+        <arg name="robot_model" value="$(arg robot_model)"/>
+   	<arg name="description_package" value="$(arg description_package)"/>
     </include>
 
     <group if="$(arg multi)">
@@ -45,6 +50,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <arg name="material" value="Indigo"/>
             <arg name="mode" value="sitl"/>
             <arg name="ns_prefix" value="$(arg ns_prefix)"/>
+            <arg name="robot_model" value="$(arg robot_model)"/>
+   	    <arg name="description_package" value="$(arg description_package)"/>
         </include>
         <!-- Launch robot id=3 -->
         <include file="$(find px4_bringup)/launch/spawn_robot.launch">
@@ -52,6 +59,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <arg name="material" value="ZincYellow"/>
             <arg name="mode" value="sitl"/>
             <arg name="ns_prefix" value="$(arg ns_prefix)"/>
+            <arg name="robot_model" value="$(arg robot_model)"/>
+   	    <arg name="description_package" value="$(arg description_package)"/>
         </include>
     </group>
 

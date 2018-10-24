@@ -11,18 +11,23 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <launch>
 
     <arg name="multi" default="false"/>
+    <arg name="robot_model" default="aeroarms_hecatonquiros_positioner_gripper"/>
+    <arg name="description_package" default="arm_description"/>
+    <arg name="world" default="empty_light_hecatonquiros"/>
 
     <!-- Load frame transforms for map and UAVs -->
     <rosparam file="$(find px4_bringup)/config/simulation_params.yaml" command="load" />
 
     <!-- Launch Gazebo simulation TODO: world location? -->
     <node pkg="px4_bringup" type="launch_gzworld.py" name="gazebo_world" output="screen"
-    args="-physics=ode -world=$(find px4_bringup)/config/empty_light.world"/>
+    args="-physics=ode -world=$(find px4_bringup)/config/$(arg world).world"/>
 
     <!-- Launch robot id=1 -->
     <include file="$(find px4_bringup)/launch/spawn_robot.launch">
         <arg name="id" value="1"/>
         <arg name="material" value="Orange"/>
+        <arg name="robot_model" value="$(arg robot_model)"/>
+        <arg name="description_package" value="$(arg description_package)"/>
     </include>
 
     <group if="$(arg multi)">
