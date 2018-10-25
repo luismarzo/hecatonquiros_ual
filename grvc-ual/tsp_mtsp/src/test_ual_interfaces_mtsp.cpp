@@ -32,27 +32,11 @@ using std::vector;
 int main(int _argc, char **_argv)
 {
 
-    std::ofstream file;
-    file.open("pos.txt");
-    unsigned int FileLength = 0;
-
-     string line;
-     ifstream myfile("/home/luis/ws_ual/src/grvc-ual/tsp_mtsp/src/pos.txt", ios::in | ios::out | ios::binary);
-     if (!myfile)
-     {
-         cout << "cannot open file";
-         exit(1);
-     }
-
-     while (!myfile.eof())
-     {
-         getline(myfile, line);
-         FileLength++;
-     }
-     std::cout << FileLength << std::endl;
-     file.close();
+  
 
     vector<vector<float>> salida, entrada, puntos_recorrido;
+    
+     
 
     grvc::ual::UAL ual(_argc, _argv);
     while (!ual.isReady() && ros::ok())
@@ -82,9 +66,13 @@ int main(int _argc, char **_argv)
     double flight_level = 15.0;
     ual.takeOff(flight_level);
 
-    /* //CIUDADES POR LAS QUE PASAR
 
-    entrada.resize(7);
+
+/////////////////////////////////////////Usar para meter posiciones a mano aquí en el codigo/////////////
+/*
+     //CIUDADES POR LAS QUE PASAR
+    int xyz_pos=6;
+    entrada.resize(xyz_pos+1);
                for(int i=0;i<entrada.size();i++){
               entrada[i].resize(3); // COORDENADAS 3D
               }
@@ -103,6 +91,80 @@ int main(int _argc, char **_argv)
     // FUNCIÓN DEL MTSP
       salida=funcion_mtsp(entrada);
 */
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////Usar si tienes un archivo txt/////////////////////////////////7
+
+    std::ofstream file;
+    file.open("pos.txt");
+    unsigned int FileLength = 0;
+
+     string line;
+     ifstream myfile("/home/luis/ws_ual/src/grvc-ual/tsp_mtsp/src/pos.txt", ios::in | ios::out | ios::binary);
+     if (!myfile)
+     {
+         cout << "cannot open file";
+         exit(1);
+     }
+
+	float vector_pos[200];
+
+       while (getline(myfile, line))
+     {
+         //cout<<line<<'\n'; 
+         std::stringstream geek(line);
+         geek>>vector_pos[FileLength];  
+         //std::cout<<"vector:"<<vector_pos[FileLength]<<std::endl; 
+         FileLength++;
+     }
+     
+     
+     file.close();
+     FileLength--;  //cuenta 1 numero más mas de la cuenta
+     //std::cout << "posiciones"<<FileLength/3 +1<< std::endl;
+     int xyz_pos=(FileLength/3);  //me da una posición menos (tupla de 3)
+     
+     
+     entrada.resize(xyz_pos+1);
+     for(int i=0;i<entrada.size();i++)
+     {
+          entrada[i].resize(3); // COORDENADAS 3D
+     }
+     
+   
+     
+ 
+     
+     
+     int cnt=0;
+
+     for(int i=0;i<= xyz_pos;i++){
+ 
+     	for(int j=0;j<=2;j++){
+     	//std::cout<<"i:"<<i<<"j:"<<j<<"cnt"<<cnt<<std::endl;
+     	entrada[i][j]=vector_pos[cnt];
+     	cnt++;
+     	//std::cout<<"entrada:"<<entrada[i][j]<<std::endl;
+     	}
+     }  
+     
+     	cnt=0;
+          for(int i=0;i<= xyz_pos;i++){
+     	for(int j=0;j<=2;j++){
+     	//std::cout<<entrada[i][j]<<std::endl;
+     	cnt++;
+     	}
+     }
+     
+     //sleep(1);
+     //std::cout<<"WOOOW"<<std::endl;
+     salida=funcion_mtsp(entrada);
+
+ 
+
+
+////////////////////////////////////////////////////////////////////7
 
 
 
@@ -111,12 +173,12 @@ int main(int _argc, char **_argv)
     std::list<grvc::ual::Waypoint> path;
     grvc::ual::Waypoint waypoint;
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < xyz_pos+1; i++)
     {
         waypoint.header.frame_id = "map";
         waypoint.pose.position.x = salida[i][0];
         waypoint.pose.position.y = salida[i][1];
-        waypoint.pose.position.z = flight_level;
+        waypoint.pose.position.z = salida[i][2];
         waypoint.pose.orientation.x = 0;
         waypoint.pose.orientation.y = 0;
         waypoint.pose.orientation.z = 0;
